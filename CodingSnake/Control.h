@@ -50,7 +50,20 @@ void DrawFirstScene() {
 void DrawSecondScene() {
 	Color::Black();
 	FillRectangle(0, 0, 1920, 1080);
+	Color::Aqua();
+	DrawRectangle((1920-1650)/2, 250, 1650, 750, 4);
 	backInfoBtn.Draw();
+	Color::White();
+	glWrite(200, 300, "Author: megagem.");
+	glWrite(200, 350, "Simple realisation of game \"Snake\".");
+	glWrite(200, 400, "Recomended using standart window size.");
+	glWrite(200, 450, "Controls:");
+	glWrite(300, 500, "W - up");
+	glWrite(300, 550, "S - down");
+	glWrite(300, 600, "D - right");
+	glWrite(300, 650, "A - left");
+	glWrite(200, 750, "C++ OpenGL Microsoft Visual Studio 2015.");
+	glWrite(200, 800, "Github: https://github.com/medmene/SnakeGL");
 }
 //test
 void DrawGrid() {
