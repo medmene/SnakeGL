@@ -144,9 +144,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BaceDefines.h" />
     <ClInclude Include="Classes.h" />
     <ClInclude Include="Control.h" />
-    <ClInclude Include="DrawFucntions.h" />
+    <ClInclude Include="CustomTypes.h" />
+    <ClInclude Include="DrawFunctions.h" />
+    <ClInclude Include="Inits.h" />
+    <ClInclude Include="KeyboardEvents.h" />
+    <ClInclude Include="MouseEvents.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

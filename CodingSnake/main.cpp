@@ -1,13 +1,11 @@
-#include "Control.h"
+#include "Inits.h"
 
-#ifdef graphics
-void Draw();
-void Initialize()
+/*void Initialize()
 {
 	startBtn = Button(800, 300, 400, 100, "Start");
 	infoBtn = Button(800, 500, 400, 100, "Info");
 	exitBtn = Button(800, 700, 400, 100, "Exit");
-	backInfoBtn = Button(100, 100, 400, 100, "Back");
+	backInfoBtn = Button(100, 80, 400, 100, "Back");
 	backGameBtn = Button(1550, 970, 300, 80, "Back");
 	newGameBtn = Button(1200, 970, 300, 80, "New Game");
 	glClearColor(0.0, 0.0, 0.0, 1.0);
@@ -93,9 +91,9 @@ void onKeyboard(unsigned char key, int x, int y) {
 	}
 	Draw();
 }
-
+*/
 void Draw(){
-	switch (globalState)
+	switch (gameProps::globalState)
 	{
 	case 0: DrawFirstScene(); break;
 	case 1: DrawSecondScene(); break;
@@ -105,49 +103,39 @@ void Draw(){
 }
 
 void TimerFunction(int value) {
-	Point tmp = Snake[Snake.size() - 1];
-	for (int i = Snake.size() - 1; i > 0; i--) {
-		if (Snake[i] != Snake[i - 1]) {
-			Snake[i].x = Snake[i - 1].x;
-			Snake[i].y = Snake[i - 1].y;
+	Point tmp = Scenes::Snake[Scenes::Snake.size() - 1];
+	for (int i = Scenes::Snake.size() - 1; i > 0; i--) {
+		if (Scenes::Snake[i] != Scenes::Snake[i - 1]) {
+			Scenes::Snake[i].x = Scenes::Snake[i - 1].x;
+			Scenes::Snake[i].y = Scenes::Snake[i - 1].y;
 		}
 	}
-	switch (direction)
+	switch (Scenes::direction)
 	{
-	case 0: Snake[0].y--; break;
-	case 1: Snake[0].x++; break;
-	case 2: Snake[0].y++; break;
-	case 3: Snake[0].x--; break;
+	case 0: Scenes::Snake[0].y--; break;
+	case 1: Scenes::Snake[0].x++; break;
+	case 2: Scenes::Snake[0].y++; break;
+	case 3: Scenes::Snake[0].x--; break;
 	}
-	if (Snake[0] == food) {
-		Snake.push_back(tmp);
-		Scores += 10;
-		food.x = rand() % 46; food.y = rand() % 22;
-		while (food == Snake[0]) { food.x = rand() % 46; food.y = rand() % 22; }
+	if (Scenes::Snake[0] == Scenes::food) {
+		Scenes::Snake.push_back(tmp);
+		Scenes::Scores += 10;
+		Scenes::food.x = rand() % 46; Scenes::food.y = rand() % 22;
+		while (Scenes::food == Scenes::Snake[0]) { Scenes::food.x = rand() % 46; Scenes::food.y = rand() % 22; }
 	}
 	//Game over
-	if (!HoverSnake(Snake[0]) ||!CheckSnake()) {
-		Scores = 0;
-		Snake.clear();
-		Snake.push_back(Point(rand() % 46, rand() % 22));
-		food.x = rand() % 46; food.y = rand() % 22;
-		while (food == Snake[0]) { food.x = rand() % 46; food.y = rand() % 22; }
+	if (!HoverSnake(Scenes::Snake[0]) ||!CheckSnake()) {
+		Scenes::Scores = 0;
+		Scenes::Snake.clear();
+		Scenes::Snake.push_back(Point(rand() % 46, rand() % 22));
+		Scenes::food.x = rand() % 46; Scenes::food.y = rand() % 22;
+		while (Scenes::food == Scenes::Snake[0]) { Scenes::food.x = rand() % 46; Scenes::food.y = rand() % 22; }
 	}
-	else if(!backPressed_inGame)glutTimerFunc(Speed, TimerFunction, 1);
+	else if(!Scenes::backPressed_inGame)glutTimerFunc(Scenes::Speed, TimerFunction, 1);
 	Draw();
 }
-#endif // graphics
 
 void main(int argc, char **argv) {
-	windwScale = 2.666666f;
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-	glutInitWindowSize(720, 405);		//Window size
-	glutInitWindowPosition(800, 400);	//Window position
-	glutCreateWindow("Snake");			//Window name
-	Initialize();						
-	glutDisplayFunc(Draw);				//Draw
-	glutMouseFunc(MouseFunc);			//Mouse
-	glutKeyboardFunc(onKeyboard);		//Keyboard
-	glutMainLoop();
+	Init(argc, argv);
+	return;
 }
